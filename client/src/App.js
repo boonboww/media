@@ -7,12 +7,14 @@ import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
+// import { Login } from "@mui/icons-material";
 
 function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
-  //const isAuth = Boolean(useSelector((state) => state.token));
-  const isAuth = true; // Simulating authentication for demonstration
+  const isAuth = Boolean(useSelector((state) => state.token));
+  
+
 
   return (
     <div className="app">
@@ -29,6 +31,7 @@ function App() {
               path="/profile/:userId"
               element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
             />
+           
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

@@ -22,23 +22,19 @@ export const authSlice = createSlice({
       state.user = null;
       state.token = null;
     },
+    setFriends: (state, action) => {
+      if (state.user) {
+        state.user.friends = action.payload.friends;
+      } else {
+        console.error("user friends non-existent :(");
+      }
+    },
     setPosts: (state, action) => {
       state.posts = action.payload.posts;
     },
-    setFriend: (state, action) => {
-      if (state.user.friends) {
-        state.user.friends = state.user.friends.filter(
-          (friend) => friend._id !== action.payload.friendId
-        );
-      } else {
-        console.error("User friends array is undefined. Cannot remove friend.");
-      }
-    },
     setPost: (state, action) => {
       const updatedPosts = state.posts.map((post) => {
-        if (post._id === action.payload.postId) {
-          return action.payload.likes;
-        }
+        if (post._id === action.payload.post._id) return action.payload.post;
         return post;
       });
       state.posts = updatedPosts;
@@ -46,6 +42,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setMode, setLogin, setLogout, setPosts, setFriend, setPost } =
+export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost } =
   authSlice.actions;
 export default authSlice.reducer;
